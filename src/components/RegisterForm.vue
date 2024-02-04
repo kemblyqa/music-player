@@ -71,7 +71,7 @@
     </vee-form>
 </template>
 <script>
-import firebase from '@/includes/firebase'
+import { auth, usersCollection } from '@/includes/firebase'
 
 export default {
     name: 'RegisterForm',
@@ -97,7 +97,7 @@ export default {
     },
 
     methods: {
-        async register({ email, password }) {
+        async register({ age, country, email, name, password }) {
             this.reg_show_alert = true
             this.reg_in_submission = true
             this.reg_alert_variant = 'bg-blue-500'
@@ -106,7 +106,16 @@ export default {
             let userCred = null
 
             try {
-                userCred = await firebase.auth().createUserWithEmailAndPassword(email, password)
+                userCred = await auth.createUserWithEmailAndPassword(email, password)
+            } catch (err) {
+                this.reg_in_submission = false
+                this.reg_alert_variant = 'bg-red-500'
+                this.reg_alert_msg = 'An unexpected error occured. Please try again later.'
+                return;
+            }
+
+            try {
+                await usersCollection.add({ age, country, email, name })
             } catch (err) {
                 this.reg_in_submission = false
                 this.reg_alert_variant = 'bg-red-500'
