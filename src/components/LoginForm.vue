@@ -28,6 +28,7 @@
 <script>
 export default {
     name: 'LoginForm',
+    props: ['tab'],
     data() {
         return {
             loginSchema: {
