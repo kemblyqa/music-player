@@ -7,18 +7,22 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      name: 'home',
       path: '/',
       component: Home
     },
     {
+      name: 'about',
       path: '/about',
       component: About
     },
     {
+      name: 'manage',
       path: '/manage',
       component: Manage
     }
-  ]
+  ],
+  linkExactActiveClass: 'text-yellow-500'
 })
 
 export default router
